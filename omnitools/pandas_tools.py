@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta
-from numpy import where
-from pandas import DataFrame, IntervalIndex, cut
-from azure.storage.blob import BlobServiceClient
 import os
 from typing import Optional
+from subprocess import run
+from datetime import datetime, timedelta
+from numpy import where
+from pandas import DataFrame, read_csv, IntervalIndex, cut
+from azure.storage.blob import BlobServiceClient
 
 
 def format_date(dates, from_format:str, to_format:str):
@@ -77,3 +78,32 @@ def save_to_blob(df: DataFrame, path: str, blob_container_name: str, storage_acc
     blob_service_client = BlobServiceClient(blob_storage_url, secret_key)
     blob_client = blob_service_client.get_blob_client(container=blob_container_name, blob=path)
     blob_client.upload_blob(df.to_csv(index=keep_index), blob_type="BlockBlob", overwrite=True)
+
+
+def get_blob_client(path: str, blob_container_name: str, storage_account_name: str, secret_key: Optional[str] = None):
+
+    blob_storage_url = f"https://{storage_account_name}.blob.core.windows.net"
+    if secret_key is None:
+        secret_key = os.getenv("BLOBSTORAGEKEY")
+    blob_service_client = BlobServiceClient(blob_storage_url, secret_key)
+    blob_client = blob_service_client.get_blob_client(container=blob_container_name, blob=path)
+
+    return blob_client
+
+
+def load_csv_from_blob(path: str, blob_container_name: str, storage_account_name: str,
+                       secret_key: Optional[str] = None) -> DataFrame:
+
+    blob_client = get_blob_client(path, secret_key, blob_container_name, storage_account_name)
+    data_str = blob_client.download_blob().content_as_text()
+    # with NamedTemporaryFile() as tmp_csv:
+    #     tmp_csv.write(bytes(data_str, encoding='utf8'))
+    tmp_csv_file = "tmp.csv"
+    with open(tmp_csv_file, "w") as tmp_csv:
+        tmp_csv.write(data_str)
+
+    df = read_csv(tmp_csv_file)
+    run(f'rm {tmp_csv_file}', shell=True)
+
+    return df
+
