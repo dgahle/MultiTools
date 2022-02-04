@@ -13,19 +13,13 @@ def get_edge_sql_connection(username:str, server:str, database:str, authenticati
 def build_sql_query_str(select:Union[str, list], table:str, where:Optional[Union[str, list]]=None) -> str:
     # add SELECT data
     select = [select] if isinstance(select, str) else select
-    sql_query = "SELECT"
-    for data in select:
-        sql_query += f" {data},"
-    sql_query = sql_query[:-1]
+    sql_query = "SELECT " + ", ".join(select)
     # add FROM database
     sql_query += f" FROM {table}"
     # add WHERE condition to sql_query
     if where is not None:
         where = [where] if isinstance(where, str) else where
-        sql_query += f" WHERE "
-        for where_condition in list(where):
-            sql_query += f"{where_condition} AND "
-        sql_query = sql_query[:-4]
+        sql_query += f" WHERE " + " AND ".join(where)
 
     return sql_query
 
