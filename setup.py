@@ -25,7 +25,7 @@ CLASSIFIERS = [ 'Development Status :: 3 - Alpha',      # Chose either "3 - Alph
 setup(  name='multitools',
         version='0.0.1',
         url='https://github.com/dgahle/OmniTools',
-        download_url="https://github.com/dgahle/OmniTools/archive/refs/tags/v0.0.1.tar.gz",
+        download_url="https://github.com/dgahle/MultiTools/archive/refs/tags/v0.0.1.tar.gz",
         packages=find_packages(include=['multitools']),
         license='MIT License',
         author='Daljeet Singh Gahle',
