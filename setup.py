@@ -25,6 +25,7 @@ CLASSIFIERS = [ 'Development Status :: 3 - Alpha',      # Chose either "3 - Alph
 setup(  name='omnitools',
         version='0.0.1',
         url='https://github.com/dgahle/OmniTools',
+        download_url="https://github.com/dgahle/OmniTools/archive/refs/tags/v0.0.1.tar.gz",
         packages=find_packages(include=['omnitools']),
         license='MIT License',
         author='Daljeet Singh Gahle',
@@ -34,7 +35,6 @@ setup(  name='omnitools',
         install_requires=INSTALL_REQUIRES,
         python_requires='>=3.7',
         zip_safe=False,
-        download_url='https://github.com/user/reponame/archive/v_01.tar.gz',  # I explain this later on
         keywords=['data analysis', 'data processing', 'statistics', 'pandas support'],  # Keywords that define your package best
         classifiers=CLASSIFIERS   )
 
