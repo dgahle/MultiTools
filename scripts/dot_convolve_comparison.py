@@ -1,7 +1,7 @@
 from pandas import read_csv
 from numpy import convolve, isnan, where, diff, round
 from scipy.signal import fftconvolve
-from omnitools import dot_convolve, date_str_to_date_int, date_int_to_date_str
+from multitools import dot_convolve, date_str_to_date_int, date_int_to_date_str
 from matplotlib.pyplot import subplots
 from time import time
 
@@ -33,7 +33,7 @@ for _ in range(run_reps):
 runtimes.append(time())
 
 runtimes_ms = round(1e3 * diff(runtimes)/run_reps, 1)
-keys = ["numpy", "scipy", "pandas", "omnitools"]
+keys = ["numpy", "scipy", "pandas", "multitools"]
 runtime_pre_dict = [(k, r) for k, r in zip(keys, runtimes_ms)]
 runtime_dict = dict(runtime_pre_dict)
 for key in runtime_dict:
@@ -50,7 +50,7 @@ non_nan = [not check for check in isnan(incidence_pandas)]
 non_nan_indicies = where(non_nan)[0]
 rolling_x = [df_incidence.date_int, df_incidence.date_int, df_incidence.date_int, df_incidence.date_int[non_nan_indicies]]
 rolling_y = [incidence_omnitools, incidence_numpy, incidence_scipy, incidence_pandas[non_nan_indicies]]
-rolling_label = ["omnitools.dot_convolve", "numpy.convolve", "scipy.signal.fftconvolve", "pandas.DataFrame.rolling"]
+rolling_label = ["multitools.dot_convolve", "numpy.convolve", "scipy.signal.fftconvolve", "pandas.DataFrame.rolling"]
 rolling_offset = [0 * offest for offest in range(len(rolling_y))]
 
 rolling_linestyle = '--'

@@ -1,6 +1,5 @@
 from numpy import zeros
 
-
 def dot_convolve(data0, data1):
     shape = (len(data0), len(data0))
     matrix1 = zeros(shape)

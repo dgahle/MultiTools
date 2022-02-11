@@ -22,11 +22,11 @@ CLASSIFIERS = [ 'Development Status :: 3 - Alpha',      # Chose either "3 - Alph
                 'Programming Language :: Python :: 3',      #Specify which python versions that you want to support
                 'Programming Language :: Python :: 3.7' ]
 
-setup(  name='omnitools',
+setup(  name='multitools',
         version='0.0.1',
         url='https://github.com/dgahle/OmniTools',
         download_url="https://github.com/dgahle/OmniTools/archive/refs/tags/v0.0.1.tar.gz",
-        packages=find_packages(include=['omnitools']),
+        packages=find_packages(include=['multitools']),
         license='MIT License',
         author='Daljeet Singh Gahle',
         description='A general repo for data processing and statistical analysis tools in Python.',
